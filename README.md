@@ -44,47 +44,56 @@ To set up the environment for this project, follow these steps:
 
 ### Neural Network Architecture
 
+Sure, I'll format it correctly using Markdown with LaTeX for the mathematical expressions. Here it is:
+
+---
+
+## Neural Network Architecture
+
 The neural network used in this project consists of three fully connected layers:
 
-1. **Input Layer:**
-   - Input: State vector \(\mathbf{x} \in \mathbb{R}^{\text{state\_size}}\)
-   - Example: \(\mathbf{x} = [x_1, x_2, x_3, x_4]\)
+### Input Layer:
+- **Input:** State vector \(\mathbf{x} \in \mathbb{R}^{\text{state\_size}}\)
+- **Example:** \(\mathbf{x} = [x_1, x_2, x_3, x_4]\)
 
-2. **First Fully Connected Layer:**
-   - Weights: \(\mathbf{W}_1 \in \mathbb{R}^{\text{state\_size} \times 64}\)
-   - Biases: \(\mathbf{b}_1 \in \mathbb{R}^{64}\)
-   - Output: \(\mathbf{h}_1 = \text{ReLU}(\mathbf{W}_1 \mathbf{x} + \mathbf{b}_1)\)
-   - Dimension: \(\mathbf{h}_1 \in \mathbb{R}^{64}\)
+### First Fully Connected Layer:
+- **Weights:** \(\mathbf{W}_1 \in \mathbb{R}^{\text{state\_size} \times 64}\)
+- **Biases:** \(\mathbf{b}_1 \in \mathbb{R}^{64}\)
+- **Output:** \(\mathbf{h}_1 = \text{ReLU}(\mathbf{W}_1 \mathbf{x} + \mathbf{b}_1)\)
+- **Dimension:** \(\mathbf{h}_1 \in \mathbb{R}^{64}\)
 
-3. **Second Fully Connected Layer:**
-   - Weights: \(\mathbf{W}_2 \in \mathbb{R}^{64 \times 64}\)
-   - Biases: \(\mathbf{b}_2 \in \mathbb{R}^{64}\)
-   - Output: \(\mathbf{h}_2 = \text{ReLU}(\mathbf{W}_2 \mathbf{h}_1 + \mathbf{b}_2)\)
-   - Dimension: \(\mathbf{h}_2 \in \mathbb{R}^{64}\)
+### Second Fully Connected Layer:
+- **Weights:** \(\mathbf{W}_2 \in \mathbb{R}^{64 \times 64}\)
+- **Biases:** \(\mathbf{b}_2 \in \mathbb{R}^{64}\)
+- **Output:** \(\mathbf{h}_2 = \text{ReLU}(\mathbf{W}_2 \mathbf{h}_1 + \mathbf{b}_2)\)
+- **Dimension:** \(\mathbf{h}_2 \in \mathbb{R}^{64}\)
 
-4. **Output Layer:**
-   - Weights: \(\mathbf{W}_3 \in \mathbb{R}^{64 \times \text{action\_size}}\)
-   - Biases: \(\mathbf{b}_3 \in \mathbb{R}^{\text{action\_size}}\)
-   - Output: \(\mathbf{y} = \mathbf{W}_3 \mathbf{h}_2 + \mathbf{b}_3\)
-   - Dimension: \(\mathbf{y} \in \mathbb{R}^{\text{action\_size}}\)
+### Output Layer:
+- **Weights:** \(\mathbf{W}_3 \in \mathbb{R}^{64 \times \text{action\_size}}\)
+- **Biases:** \(\mathbf{b}_3 \in \mathbb{R}^{\text{action\_size}}\)
+- **Output:** \(\mathbf{y} = \mathbf{W}_3 \mathbf{h}_2 + \mathbf{b}_3\)
+- **Dimension:** \(\mathbf{y} \in \mathbb{R}^{\text{action\_size}}\)
 
-### Experience Replay
+## Experience Replay
 
 Experience replay is used to stabilize training by reusing past experiences.
 
-### Deep Q-Learning Algorithm
+## Deep Q-Learning Algorithm
 
-1. **Initialize replay memory \( D \) to capacity \( N \).**
-2. **Initialize action-value function \( Q \) with random weights.**
-3. **For each episode:**
-    - Initialize state \( s_1 \).
+1. **Initialize** replay memory \( D \) to capacity \( N \).
+2. **Initialize** action-value function \( Q \) with random weights.
+3. For each episode:
+    - **Initialize** state \( s_1 \).
     - For each time step:
         1. With probability \( \epsilon \) select a random action \( a_t \).
         2. Otherwise, select \( a_t = \max_a Q^*(s_t, a; \theta) \).
         3. Execute action \( a_t \) in the environment and observe reward \( r_{t+1} \) and next state \( s_{t+1} \).
         4. Store transition \((s_t, a_t, r_{t+1}, s_{t+1})\) in \( D \).
         5. Sample random minibatch of transitions from \( D \).
-        6. Set \( y_j = \begin{cases} r_j & \text{if episode terminates at step } j+1 \\ r_j + \gamma \max_{a'} Q(s_{j+1}, a'; \theta) & \text{otherwise} \end{cases} \).
+        6. Set \( y_j = \begin{cases} 
+            r_j & \text{if episode terminates at step } j+1 \\
+            r_j + \gamma \max_{a'} Q(s_{j+1}, a'; \theta) & \text{otherwise} 
+            \end{cases} \).
         7. Perform a gradient descent step on \( (y_j - Q(s_j, a_j; \theta))^2 \).
 
 ## Implementation
