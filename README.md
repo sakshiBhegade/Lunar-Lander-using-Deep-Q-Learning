@@ -44,58 +44,436 @@ To set up the environment for this project, follow these steps:
 
 ### Neural Network Architecture
 
-Sure, I'll format it correctly using Markdown with LaTeX for the mathematical expressions. Here it is:
-
----
-
-## Neural Network Architecture
-
 The neural network used in this project consists of three fully connected layers:
 
-### Input Layer:
-- **Input:** State vector \(\mathbf{x} \in \mathbb{R}^{\text{state\_size}}\)
-- **Example:** \(\mathbf{x} = [x_1, x_2, x_3, x_4]\)
-
-### First Fully Connected Layer:
-- **Weights:** \(\mathbf{W}_1 \in \mathbb{R}^{\text{state\_size} \times 64}\)
-- **Biases:** \(\mathbf{b}_1 \in \mathbb{R}^{64}\)
-- **Output:** \(\mathbf{h}_1 = \text{ReLU}(\mathbf{W}_1 \mathbf{x} + \mathbf{b}_1)\)
-- **Dimension:** \(\mathbf{h}_1 \in \mathbb{R}^{64}\)
-
-### Second Fully Connected Layer:
-- **Weights:** \(\mathbf{W}_2 \in \mathbb{R}^{64 \times 64}\)
-- **Biases:** \(\mathbf{b}_2 \in \mathbb{R}^{64}\)
-- **Output:** \(\mathbf{h}_2 = \text{ReLU}(\mathbf{W}_2 \mathbf{h}_1 + \mathbf{b}_2)\)
-- **Dimension:** \(\mathbf{h}_2 \in \mathbb{R}^{64}\)
-
-### Output Layer:
-- **Weights:** \(\mathbf{W}_3 \in \mathbb{R}^{64 \times \text{action\_size}}\)
-- **Biases:** \(\mathbf{b}_3 \in \mathbb{R}^{\text{action\_size}}\)
-- **Output:** \(\mathbf{y} = \mathbf{W}_3 \mathbf{h}_2 + \mathbf{b}_3\)
-- **Dimension:** \(\mathbf{y} \in \mathbb{R}^{\text{action\_size}}\)
-
-## Experience Replay
-
+Input Layer:
+Input: State vector 
+𝑥
+∈
+𝑅
+state_size
+x∈R 
+state_size
+ 
+Example: 
+𝑥
+=
+[
+𝑥
+1
+,
+𝑥
+2
+,
+𝑥
+3
+,
+𝑥
+4
+]
+x=[x 
+1
+​
+ ,x 
+2
+​
+ ,x 
+3
+​
+ ,x 
+4
+​
+ ]
+First Fully Connected Layer:
+Weights: 
+𝑊
+1
+∈
+𝑅
+state_size
+×
+64
+W 
+1
+​
+ ∈R 
+state_size×64
+ 
+Biases: 
+𝑏
+1
+∈
+𝑅
+64
+b 
+1
+​
+ ∈R 
+64
+ 
+Output: 
+ℎ
+1
+=
+ReLU
+(
+𝑊
+1
+𝑥
++
+𝑏
+1
+)
+h 
+1
+​
+ =ReLU(W 
+1
+​
+ x+b 
+1
+​
+ )
+Dimension: 
+ℎ
+1
+∈
+𝑅
+64
+h 
+1
+​
+ ∈R 
+64
+ 
+Second Fully Connected Layer:
+Weights: 
+𝑊
+2
+∈
+𝑅
+64
+×
+64
+W 
+2
+​
+ ∈R 
+64×64
+ 
+Biases: 
+𝑏
+2
+∈
+𝑅
+64
+b 
+2
+​
+ ∈R 
+64
+ 
+Output: 
+ℎ
+2
+=
+ReLU
+(
+𝑊
+2
+ℎ
+1
++
+𝑏
+2
+)
+h 
+2
+​
+ =ReLU(W 
+2
+​
+ h 
+1
+​
+ +b 
+2
+​
+ )
+Dimension: 
+ℎ
+2
+∈
+𝑅
+64
+h 
+2
+​
+ ∈R 
+64
+ 
+Output Layer:
+Weights: 
+𝑊
+3
+∈
+𝑅
+64
+×
+action_size
+W 
+3
+​
+ ∈R 
+64×action_size
+ 
+Biases: 
+𝑏
+3
+∈
+𝑅
+action_size
+b 
+3
+​
+ ∈R 
+action_size
+ 
+Output: 
+𝑦
+=
+𝑊
+3
+ℎ
+2
++
+𝑏
+3
+y=W 
+3
+​
+ h 
+2
+​
+ +b 
+3
+​
+ 
+Dimension: 
+𝑦
+∈
+𝑅
+action_size
+y∈R 
+action_size
+ 
+Experience Replay
 Experience replay is used to stabilize training by reusing past experiences.
 
-## Deep Q-Learning Algorithm
-
-1. **Initialize** replay memory \( D \) to capacity \( N \).
-2. **Initialize** action-value function \( Q \) with random weights.
-3. For each episode:
-    - **Initialize** state \( s_1 \).
-    - For each time step:
-        1. With probability \( \epsilon \) select a random action \( a_t \).
-        2. Otherwise, select \( a_t = \max_a Q^*(s_t, a; \theta) \).
-        3. Execute action \( a_t \) in the environment and observe reward \( r_{t+1} \) and next state \( s_{t+1} \).
-        4. Store transition \((s_t, a_t, r_{t+1}, s_{t+1})\) in \( D \).
-        5. Sample random minibatch of transitions from \( D \).
-        6. Set \( y_j = \begin{cases} 
-            r_j & \text{if episode terminates at step } j+1 \\
-            r_j + \gamma \max_{a'} Q(s_{j+1}, a'; \theta) & \text{otherwise} 
-            \end{cases} \).
-        7. Perform a gradient descent step on \( (y_j - Q(s_j, a_j; \theta))^2 \).
-
+Deep Q-Learning Algorithm
+Initialize replay memory 
+𝐷
+D to capacity 
+𝑁
+N.
+Initialize action-value function 
+𝑄
+Q with random weights.
+For each episode:
+Initialize state 
+𝑠
+1
+s 
+1
+​
+ .
+For each time step:
+With probability 
+𝜖
+ϵ select a random action 
+𝑎
+𝑡
+a 
+t
+​
+ .
+Otherwise, select 
+𝑎
+𝑡
+=
+max
+⁡
+𝑎
+𝑄
+∗
+(
+𝑠
+𝑡
+,
+𝑎
+;
+𝜃
+)
+a 
+t
+​
+ =max 
+a
+​
+ Q 
+∗
+ (s 
+t
+​
+ ,a;θ).
+Execute action 
+𝑎
+𝑡
+a 
+t
+​
+  in the environment and observe reward 
+𝑟
+𝑡
++
+1
+r 
+t+1
+​
+  and next state 
+𝑠
+𝑡
++
+1
+s 
+t+1
+​
+ .
+Store transition 
+(
+𝑠
+𝑡
+,
+𝑎
+𝑡
+,
+𝑟
+𝑡
++
+1
+,
+𝑠
+𝑡
++
+1
+)
+(s 
+t
+​
+ ,a 
+t
+​
+ ,r 
+t+1
+​
+ ,s 
+t+1
+​
+ ) in 
+𝐷
+D.
+Sample random minibatch of transitions from 
+𝐷
+D.
+Set 
+𝑦
+𝑗
+=
+{
+𝑟
+𝑗
+if episode terminates at step 
+𝑗
++
+1
+𝑟
+𝑗
++
+𝛾
+max
+⁡
+𝑎
+′
+𝑄
+(
+𝑠
+𝑗
++
+1
+,
+𝑎
+′
+;
+𝜃
+)
+otherwise
+y 
+j
+​
+ ={ 
+r 
+j
+​
+ 
+r 
+j
+​
+ +γmax 
+a 
+′
+ 
+​
+ Q(s 
+j+1
+​
+ ,a 
+′
+ ;θ)
+​
+  
+if episode terminates at step j+1
+otherwise
+​
+ .
+Perform a gradient descent step on 
+(
+𝑦
+𝑗
+−
+𝑄
+(
+𝑠
+𝑗
+,
+𝑎
+𝑗
+;
+𝜃
+)
+)
+2
+(y 
+j
+​
+ −Q(s 
+j
+​
+ ,a 
+j
+​
+ ;θ)) 
+2
+ .
 ## Implementation
 
 Here is the detailed implementation of the Deep Q-Learning algorithm:
