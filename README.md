@@ -273,27 +273,25 @@ Experience replay is used to stabilize training by reusing past experiences.
 
 # Deep Q-Learning Algorithm
 
-1. Initialize replay memory \( D \) to capacity \( N \).
-2. Initialize action-value function \( Q \) with random weights.
-
-## For each episode:
-1. Initialize state \( s_1 \).
-
-## For each time step:
-1. With probability \( \epsilon \), select a random action \( a_t \).
-2. Otherwise, select \( a_t = \max_a Q^*(s_t, a; \theta) \).
-3. Execute action \( a_t \) in the environment and observe reward \( r_{t+1} \) and next state \( s_{t+1} \).
-4. Store transition \( (s_t, a_t, r_{t+1}, s_{t+1}) \) in \( D \).
-5. Sample a random minibatch of transitions from \( D \).
-6. Set 
-   \[
-   y_j = 
-   \begin{cases} 
-   r_j & \text{if episode terminates at step } j+1 \\
-   r_j + \gamma \max_{a'} Q(s_{j+1}, a'; \theta) & \text{otherwise}
-   \end{cases}
-   \]
-7. Perform a gradient descent step on \( (y_j - Q(s_j, a_j; \theta))^2 \).
+1. **Initialize** replay memory \( D \) to capacity \( N \).
+2. **Initialize** action-value function \( Q \) with random weights.
+3. For each episode:
+    * **Initialize** state \( s_1 \).
+    * For each time step:
+        1. With probability \( \epsilon \) select a random action \( a_t \).
+        2. Otherwise, select \( a_t = \max_a Q^*(s_t, a; \theta) \).
+        3. Execute action \( a_t \) in the environment and observe reward \( r_{t+1} \) and next state \( s_{t+1} \).
+        4. Store transition \( (s_t, a_t, r_{t+1}, s_{t+1}) \) in \( D \).
+        5. Sample random minibatch of transitions from \( D \).
+        6. Set 
+           \[
+           y_j = 
+           \begin{cases} 
+           r_j & \text{if episode terminates at step } j+1 \\
+           r_j + \gamma \max_{a'} Q(s_{j+1}, a'; \theta) & \text{otherwise}
+           \end{cases}
+           \]
+        7. Perform a gradient descent step on \( (y_j - Q(s_j, a_j; \theta))^2 \).
 
 ## Implementation
 
