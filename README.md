@@ -1,4 +1,4 @@
-![image](https://github.com/sakshiBhegade/Lunar-Lander-using-Deep-Q-Learning/assets/144518865/46b61113-ab14-4c6a-986d-529bc2e14a93)# Lunar Lander using Deep Q-Learning
+# Lunar Lander using Deep Q-Learning
 
 This repository contains a Deep Q-Learning implementation for the Lunar Lander environment from the Gymnasium library. This project aims to train an agent to successfully land a lunar module on a designated landing pad using reinforcement learning techniques.
 
