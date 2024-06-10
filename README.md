@@ -1,4 +1,4 @@
-# Lunar Lander using Deep Q-Learning
+![image](https://github.com/sakshiBhegade/Lunar-Lander-using-Deep-Q-Learning/assets/144518865/46b61113-ab14-4c6a-986d-529bc2e14a93)# Lunar Lander using Deep Q-Learning
 
 This repository contains a Deep Q-Learning implementation for the Lunar Lander environment from the Gymnasium library. This project aims to train an agent to successfully land a lunar module on a designated landing pad using reinforcement learning techniques.
 
@@ -272,26 +272,7 @@ action_size
 Experience replay is used to stabilize training by reusing past experiences.
 
 # Deep Q-Learning Algorithm
-
-1. **Initialize** replay memory \( D \) to capacity \( N \).
-2. **Initialize** action-value function \( Q \) with random weights.
-3. For each episode:
-    * **Initialize** state \( s_1 \).
-    * For each time step:
-        1. With probability \( \epsilon \) select a random action \( a_t \).
-        2. Otherwise, select \( a_t = \max_a Q^*(s_t, a; \theta) \).
-        3. Execute action \( a_t \) in the environment and observe reward \( r_{t+1} \) and next state \( s_{t+1} \).
-        4. Store transition \( (s_t, a_t, r_{t+1}, s_{t+1}) \) in \( D \).
-        5. Sample random minibatch of transitions from \( D \).
-        6. Set 
-           \[
-           y_j = 
-           \begin{cases} 
-           r_j & \text{if episode terminates at step } j+1 \\
-           r_j + \gamma \max_{a'} Q(s_{j+1}, a'; \theta) & \text{otherwise}
-           \end{cases}
-           \]
-        7. Perform a gradient descent step on \( (y_j - Q(s_j, a_j; \theta))^2 \).
+<img width="744" alt="deep_learning_lunar" src="https://github.com/sakshiBhegade/Lunar-Lander-using-Deep-Q-Learning/assets/144518865/ae459d2c-cd49-4535-a2a5-b08c4a1ef6be">
 
 ## Implementation
 
