@@ -267,135 +267,34 @@ action_size
 y∈R 
 action_size
  
-Experience Replay
+# Experience Replay
+
 Experience replay is used to stabilize training by reusing past experiences.
 
-Deep Q-Learning Algorithm
-Initialize replay memory 
-𝐷
-D to capacity 
-𝑁
-N.
-Initialize action-value function 
-𝑄
-Q with random weights.
-For each episode:
-Initialize state 
-𝑠
-1
-s 
-1
-​
- .
-For each time step:
-With probability 
-𝜖
-ϵ select a random action 
-𝑎
-𝑡
-a 
-t
-​
- .
-Otherwise, select 
-𝑎
-𝑡
-=
-max
-⁡
-𝑎
-𝑄
-∗
-(
-𝑠
-𝑡
-,
-𝑎
-;
-𝜃
-)
-a 
-t
-​
- =max 
-a
-​
- Q 
-∗
- (s 
-t
-​
- ,a;θ).
-Execute action 
-𝑎
-𝑡
-a 
-t
-​
-  in the environment and observe reward 
-𝑟
-𝑡
-+
-1
-r 
-t+1
-​
-  and next state 
-𝑠
-𝑡
-+
-1
-s 
-t+1
-​
- .
-Store transition 
-(
-𝑠
-𝑡
-,
-𝑎
-𝑡
-,
-𝑟
-𝑡
-+
-1
-,
-𝑠
-𝑡
-+
-1
-)
-(s 
-t
-​
- ,a 
-t
-​
- ,r 
-t+1
-​
- ,s 
-t+1
-​
- ) in 
-𝐷
-D.
-Sample random minibatch of transitions from 
-𝐷
-D.
-Set
-y_j =
-\begin{cases}
-r_j & \text{if episode terminates at step } j+1 \\
-r_j + \gamma \max_{a'} Q(s_{j+1}, a'; \theta) & \text{otherwise}
-\end{cases}
-\].
-7. Perform a gradient descent step on
-\[
-\left( y_j - Q(s_j, a_j; \theta) \right)^2
-\].
+# Deep Q-Learning Algorithm
+
+1. Initialize replay memory \( D \) to capacity \( N \).
+2. Initialize action-value function \( Q \) with random weights.
+
+## For each episode:
+1. Initialize state \( s_1 \).
+
+## For each time step:
+1. With probability \( \epsilon \), select a random action \( a_t \).
+2. Otherwise, select \( a_t = \max_a Q^*(s_t, a; \theta) \).
+3. Execute action \( a_t \) in the environment and observe reward \( r_{t+1} \) and next state \( s_{t+1} \).
+4. Store transition \( (s_t, a_t, r_{t+1}, s_{t+1}) \) in \( D \).
+5. Sample a random minibatch of transitions from \( D \).
+6. Set 
+   \[
+   y_j = 
+   \begin{cases} 
+   r_j & \text{if episode terminates at step } j+1 \\
+   r_j + \gamma \max_{a'} Q(s_{j+1}, a'; \theta) & \text{otherwise}
+   \end{cases}
+   \]
+7. Perform a gradient descent step on \( (y_j - Q(s_j, a_j; \theta))^2 \).
+
 ## Implementation
 
 Here is the detailed implementation of the Deep Q-Learning algorithm:
