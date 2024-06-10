@@ -385,95 +385,17 @@ D.
 Sample random minibatch of transitions from 
 𝐷
 D.
-Set 
-𝑦
-𝑗
-=
-{
-𝑟
-𝑗
-if episode terminates at step 
-𝑗
-+
-1
-𝑟
-𝑗
-+
-𝛾
-max
-⁡
-𝑎
-′
-𝑄
-(
-𝑠
-𝑗
-+
-1
-,
-𝑎
-′
-;
-𝜃
-)
-otherwise
-y 
-j
-​
- ={ 
-r 
-j
-​
- 
-r 
-j
-​
- +γmax 
-a 
-′
- 
-​
- Q(s 
-j+1
-​
- ,a 
-′
- ;θ)
-​
-  
-if episode terminates at step j+1
-otherwise
-​
- .
-Perform a gradient descent step on 
-(
-𝑦
-𝑗
-−
-𝑄
-(
-𝑠
-𝑗
-,
-𝑎
-𝑗
-;
-𝜃
-)
-)
-2
-(y 
-j
-​
- −Q(s 
-j
-​
- ,a 
-j
-​
- ;θ)) 
-2
- .
+Set
+y_j =
+\begin{cases}
+r_j & \text{if episode terminates at step } j+1 \\
+r_j + \gamma \max_{a'} Q(s_{j+1}, a'; \theta) & \text{otherwise}
+\end{cases}
+\].
+7. Perform a gradient descent step on
+\[
+\left( y_j - Q(s_j, a_j; \theta) \right)^2
+\].
 ## Implementation
 
 Here is the detailed implementation of the Deep Q-Learning algorithm:
